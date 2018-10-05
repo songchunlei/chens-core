@@ -1,6 +1,5 @@
 package org.chens.core.vo;
 
-
 import lombok.Data;
 import org.chens.core.enums.IBaseEnum;
 
@@ -63,6 +62,19 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
+    /**
+     * 判断是否成功
+     * 
+     * @return Boolean
+     */
+    public Boolean isSuccess() {
+        if (code == SUCCESS_CODE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static Result getInstance() {
         return new Result();
     }
@@ -71,7 +83,7 @@ public class Result<T> implements Serializable {
         if (msg == null) {
             msg = EMPTY_MSG;
         }
-        return new Result(SUCCESS_CODE,msg,data);
+        return new Result(SUCCESS_CODE, msg, data);
     }
 
     public static <T> Result<T> getSuccess(T data) {
@@ -97,5 +109,4 @@ public class Result<T> implements Serializable {
     public static Result getError(String msg) {
         return new Result(ERROR_CODE, msg);
     }
-
 }
