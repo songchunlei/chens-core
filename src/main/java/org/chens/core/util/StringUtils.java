@@ -17,6 +17,7 @@ package org.chens.core.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,7 +129,7 @@ public class StringUtils {
      * </p>
      *
      * @param regex 正则表达式字符串
-     * @param str   要匹配的字符串
+     * @param str 要匹配的字符串
      * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
      */
     public static boolean match(String regex, String str) {
@@ -152,6 +153,7 @@ public class StringUtils {
     /**
      * 将驼峰式命名的字符串转换为下划线大写方式。如果转换前的驼峰式命名的字符串为空，则返回空字符串。</br>
      * 例如：HelloWorld->HELLO_WORLD
+     * 
      * @param name 转换前的驼峰式命名的字符串
      * @return 转换后下划线大写方式命名的字符串
      */
@@ -177,6 +179,7 @@ public class StringUtils {
     /**
      * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。</br>
      * 例如：HELLO_WORLD->HelloWorld
+     * 
      * @param name 转换前的下划线大写方式命名的字符串
      * @return 转换后的驼峰式命名的字符串
      */
@@ -192,7 +195,7 @@ public class StringUtils {
         }
         // 用下划线将原始字符串分割
         String[] camels = name.split("_");
-        for (String camel :  camels) {
+        for (String camel : camels) {
             // 跳过原始字符串中开头、结尾的下换线或双重下划线
             if (camel.isEmpty()) {
                 continue;
@@ -212,46 +215,61 @@ public class StringUtils {
 
     /**
      * id字符串转id List
+     * 
      * @param idStr
      * @param regex 区隔符
      * @return List<String>
      */
-    public static List<String> string2List(String idStr,String regex) {
-        if(isEmpty(regex))
-        {
+    public static List<String> string2List(String idStr, String regex) {
+        if (isEmpty(regex)) {
             regex = ",";
         }
         String[] idArray = idStr.split(regex);
         List<String> idList = new ArrayList<String>();
-        for(int i = 0; i < idArray.length; i++){
+        for (int i = 0; i < idArray.length; i++) {
             idList.add(idArray[i]);
         }
         return idList;
     }
 
     /**
-     * 特殊id字符串转id List
-     * 如 .0000.0000.0000转list为 [.0000,.0000.0000,.0000.0000.0000]
+     * 特殊id字符串转id List 如 .0000.0000.0000转list为 [.0000,.0000.0000,.0000.0000.0000]
+     * 
      * @param idStr
      * @param regex 区隔符
      * @return List<String>
      */
-    public static List<String> string2ListSpc(String idStr,String regex) {
-        if(isEmpty(regex))
-        {
+    public static List<String> string2ListSpc(String idStr, String regex) {
+        if (isEmpty(regex)) {
             regex = ",";
         }
-        String[] idArray = idStr.split("\\"+regex);
+        String[] idArray = idStr.split("\\" + regex);
         List<String> idList = new ArrayList<String>();
         String strTemp = "";
-        for(int i = 0; i < idArray.length; i++){
-            if(isNotEmpty(idArray[i]))
-            {
-                strTemp = strTemp+regex+idArray[i];
+        for (int i = 0; i < idArray.length; i++) {
+            if (isNotEmpty(idArray[i])) {
+                strTemp = strTemp + regex + idArray[i];
                 idList.add(strTemp);
             }
 
         }
         return idList;
     }
+
+    /**
+     * 获取随机位数的字符串
+     */
+    public static String getRandomString(String baseStr, int length) {
+        if (isEmpty(baseStr)) {
+            baseStr = "abcdefghijklmnopqrstuvwxyz0123456789";
+        }
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(baseStr.length());
+            sb.append(baseStr.charAt(number));
+        }
+        return sb.toString();
+    }
+
 }
