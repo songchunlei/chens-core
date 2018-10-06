@@ -38,6 +38,13 @@ public interface BaseBackgroundFacade<T> {
     Result<Boolean> updateById(T obj);
 
     /**
+     * 新增或更新(根据是否有id判断)
+     * @param obj
+     * @return
+     */
+    Result<Boolean> insertOrUpdate(T obj);
+
+    /**
      * 根据id查询
      * @param id
      * @return
