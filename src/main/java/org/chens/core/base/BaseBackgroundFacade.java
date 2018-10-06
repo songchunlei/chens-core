@@ -5,6 +5,7 @@ import org.chens.core.vo.QueryPageEntity;
 import org.chens.core.vo.Result;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -48,19 +49,26 @@ public interface BaseBackgroundFacade<T> {
      * @param obj
      * @return
      */
-    int selectCount(T obj);
+    Result<Integer> selectCount(T obj);
 
     /**
      * 查询
      * @param obj
      * @return
      */
-    List<T> selectList(T obj);
+    Result<List<T>> selectList(T obj);
 
     /**
      * 查询
      * @param page
      * @return
      */
-    PageResult<T> selectPage(QueryPageEntity<T> page);
+    Result<PageResult<T>> selectPage(QueryPageEntity<T> page);
+
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    Result<Boolean> deleteBatchIds(Collection<? extends Serializable> idList);
 }
